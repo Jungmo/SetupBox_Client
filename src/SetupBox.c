@@ -22,6 +22,7 @@ int authentication(char* email, char* password)
 	{
 		isgood = 1;
 	}
+	pclose(fp);
 	return isgood;
 }
 
@@ -60,6 +61,7 @@ int main(int argc, char **argv)
 		system("stty -echo");
 		scanf("%s", password);
 		system("stty echo");
+/*
 		isgood = authentication(email, password);
 		if(isgood == 1)
 		{
@@ -68,8 +70,9 @@ int main(int argc, char **argv)
 		else if(isgood == 0)
 		{
 			printf("register ID first in webpage!\n");
+			exit(1);
 		}
-		exit(1);
+*/		
 	}
 
 	if(!strcmp(argv[1], "--clone"))
@@ -80,7 +83,7 @@ int main(int argc, char **argv)
 		system("stty -echo");
 		scanf("%s", password);
 		system("stty echo");
-
+/*
 		isgood = authentication(email, password);
 		if(isgood == 1)
 		{
@@ -91,7 +94,7 @@ int main(int argc, char **argv)
 			printf("register ID first in webpage!\n");
 			exit(1);
 		}
-		
+*/		
 		pathinfo = popen("cat ~/.SetupBox/pathinfo", "r");
 		fgets(path,1024, pathinfo);
 		
@@ -103,6 +106,7 @@ int main(int argc, char **argv)
 		}
 		sprintf(clone,"git clone %s", path);
 		system(clone);
+		pclose(pathinfo);
 	}
 
 	if(!strcmp(argv[1], "--start"))
@@ -113,7 +117,7 @@ int main(int argc, char **argv)
 		system("stty -echo");
 		scanf("%s", password);
 		system("stty echo");
-
+/*
 		isgood = authentication(email, password);
 		if(isgood == 1)
 		{
@@ -124,8 +128,8 @@ int main(int argc, char **argv)
 			printf("register ID first in webpage!\n");
 			exit(1);
 		}
-	
-		sprintf(client, "nohup client > ~/.SetupBox/log.txt");
+*/	
+		sprintf(client, "nohup SetupBox_client &> ~/.SetupBox/log.txt &");
 		system(client);
 	}
 

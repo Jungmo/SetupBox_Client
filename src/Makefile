@@ -5,7 +5,7 @@ TARGET=SetupBox
 .SUFFIXES:.c .o
 
 all : $(TARGET)
-	cp -f client $(TARGET) ../SetupBox/usr/local/bin
+	cp -f SetupBox_client $(TARGET) ../SetupBox/usr/local/bin
 $(TARGET) : $(OBJS)
 	$(CC) -o $@ $(OBJS)
 
