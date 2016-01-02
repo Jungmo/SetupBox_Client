@@ -15,7 +15,7 @@ int authentication(char* email, char* password)
 	char auth[1024];
 	FILE *fp;
 	int isgood=0;
-	sprintf(auth, "http -a %s %s %s", email, password, AUTHSERVER);
+	sprintf(auth, "http -a %s:%s %s", email, password, AUTHSERVER);
 	fp = popen(auth,"r");
 	fgets(auth, 1024, fp);
 	if(!strcmp(auth, GOODMESSAGE))
@@ -51,6 +51,7 @@ int main(int argc, char **argv)
 		system("git config receive.denyCurrentBranch ignore");
 		system("git add . --all");
 		system("git commit -m \"initialize git\"");
+		system("mkdir ~/.SetupBox");
 		system("pwd > ~/.SetupBox/pathinfo");
 
 		printf("Enter your email : \n");
@@ -124,7 +125,7 @@ int main(int argc, char **argv)
 			exit(1);
 		}
 	
-		sprintf(client, "nohup client %s %s > ~/.SetupBox/log.txt",email, password);
+		sprintf(client, "nohup client > ~/.SetupBox/log.txt");
 		system(client);
 	}
 
