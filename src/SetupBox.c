@@ -1,12 +1,28 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-
+#define AUTHSERVER "127.0.0.1:5000/foo"
+#define GOODMESSAGE "LOGIN GOOD"
 void dohelp()
 {
 	printf("If you run first after install SetupBox, initialize first on server-side directory.\n");
 	printf("To initialize, do SetupBox --init then enter email and pw with su\n");
 	printf("To start, do SetupBox --start\n");
+}
+
+int authentication(char* email, char* password)
+{
+	char auth[1024];
+	FILE *fp;
+	int isgood=0;
+	sprintf(auth, "http -a %s %s %s", email, password, AUTHSERVER);
+	fp = popen(auth,"r");
+	fgets(auth, 1024, fp);
+	if(!strcmp(auth, GOODMESSAGE))
+	{
+		isgood = 1;
+	}
+	return isgood;
 }
 
 int main(int argc, char **argv)
@@ -18,9 +34,9 @@ int main(int argc, char **argv)
 	char email[30];
 	char password[30];
 	char client[1024];
-	int isgoodemail;
+	int isgood;
 	char path[1024];
-	char regist[1024];
+	char clone[1024];
 	char user[1024];
 
 	if(!strcmp(argv[1], "--help"))
@@ -35,59 +51,80 @@ int main(int argc, char **argv)
 		system("git config receive.denyCurrentBranch ignore");
 		system("git add . --all");
 		system("git commit -m \"initialize git\"");
-		system("pwd > ~/pathinfo");
-//		do{
-			printf("Enter your email : \n");
-			scanf("%s", email);
-//			if(strstr(email, "@") != NULL)
-//			{
-//				isgoodemail = 1;
-//			}
-//			
-//		}while(isgoodemail<0);
-		
+		system("pwd > ~/.SetupBox/pathinfo");
+
+		printf("Enter your email : \n");
+		scanf("%s", email);
 		printf("Enter your password : \n");
 		system("stty -echo");
 		scanf("%s", password);
 		system("stty echo");
-		sprintf(user,"echo \"email:%s\npassword:%s\" > ~/userinfo", email,password);
-		system(user);
-		printf("register success!\n");
+		isgood = authentication(email, password);
+		if(isgood == 1)
+		{
+			printf("register & authentication success!\n");
+		}
+		else if(isgood == 0)
+		{
+			printf("register ID first in webpage!\n");
+		}
 		exit(1);
 	}
 
 	if(!strcmp(argv[1], "--clone"))
-	{
-			pathinfo = fopen("/home/neil/pathinfo", "r");
-			if(pathinfo == NULL)
-			{
-				printf("Path information file open error!\n");
-				dohelp();
-				exit(1);
-			}
-			fscanf(pathinfo,"%s",path);
-			sprintf(regist,"git clone %s", path);
-			system(regist);
+	{	
+		printf("Enter your email : \n");
+		scanf("%s", email);
+		printf("Enter your password : \n");
+		system("stty -echo");
+		scanf("%s", password);
+		system("stty echo");
+
+		isgood = authentication(email, password);
+		if(isgood == 1)
+		{
+			printf("authentication success!\n");
+		}
+		else if(isgood == 0)
+		{
+			printf("register ID first in webpage!\n");
+			exit(1);
+		}
+		
+		pathinfo = popen("cat ~/.SetupBox/pathinfo", "r");
+		fgets(path,1024, pathinfo);
+		
+		if(strlen(path) == 0)
+		{
+			printf("Path information file open error!\n");
+			dohelp();
+			exit(1);
+		}
+		sprintf(clone,"git clone %s", path);
+		system(clone);
 	}
 
 	if(!strcmp(argv[1], "--start"))
 	{
-		userinfo = fopen("/home/neil/userinfo", "r");
-			if(userinfo == NULL)
+		printf("Enter your email : \n");
+		scanf("%s", email);
+		printf("Enter your password : \n");
+		system("stty -echo");
+		scanf("%s", password);
+		system("stty echo");
+
+		isgood = authentication(email, password);
+		if(isgood == 1)
 		{
-			printf("User information file open error!");
-			dohelp();
+			printf("authentication success!\n");
+		}
+		else if(isgood == 0)
+		{
+			printf("register ID first in webpage!\n");
 			exit(1);
 		}
-		
-		fscanf(userinfo,"email:%s\npassword:%s",email, password);
-		if(strlen(email) == 0 || strlen(password) == 0)
-		{
-			printf("User information error!\n");
-			dohelp();
-			exit(1);
-		}
-		sprintf(client, "nohup client %s %s &",email, password);
+	
+		sprintf(client, "nohup client %s %s > ~/.SetupBox/log.txt",email, password);
 		system(client);
 	}
 
