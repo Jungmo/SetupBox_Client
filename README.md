@@ -3,6 +3,7 @@
 Authentication is Commented out
 
 debian package : SetupBox.deb
+To install, type 'sudo dpkg -i Setupbox.deb'
 
 md5sum SetupBox.dep : a02ebef42b2f2bb15c3439393ade099a
 
