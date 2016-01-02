@@ -1,5 +1,5 @@
 Package: setupbox
-Version: 1.0.2
+Version: 1.0.3
 Architecture: all
 Depends: git, python-httplib2, python3-httplib2
 Maintainer: Developers <ajm100@ajou.ac.kr>

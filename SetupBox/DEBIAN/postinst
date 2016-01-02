@@ -1,0 +1,4 @@
+#!/bin/bash
+echo "make pathinfo"
+mkdir ~/.SetupBox
+touch ~/.SetupBox/pathinfo
