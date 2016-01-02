@@ -1,0 +1,42 @@
+#!/bin/bash
+
+DIR=$(pwd)
+LOGIN=http://127.0.0.1:5000/foo
+EMAIL=$1
+PASSWORD=$2
+argc=$#
+
+#response=$(curl --write-out %{http_code} --silent --output /dev/null servername)
+
+#if ! [ $argc = 3 ]
+#	then
+#		echo "Less parameter";
+#		echo "./git.sh <E-MAIL> <PASSWORD>";
+#		exit 1
+#fi
+
+#ISGOODUSER=$(http -a ${EMAIL}:${PASSWORD} ${LOGIN})
+
+#if ! [ "$ISGOODUSER" = "LOGIN GOOD" ]
+#	then
+#		exit 1
+#fi
+
+change=first
+while : ; do
+
+#	if [[ -n $change ]]
+#		then
+		git add . --all &
+		git commit -m $change &
+		git pull --quiet &			
+#			./push.sh $un $pw
+		git push --quiet origin master & 
+				
+#			change=
+			sleep 10
+			echo "Complete a cycle. Sleep 20 seconds";
+#	fi	
+
+#	change=$(inotifywait -r -t 20 --format '%:e %f' -e 'create' -e 'delete' -e 'modify' ${DIR})
+done

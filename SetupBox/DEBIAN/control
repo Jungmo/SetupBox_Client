@@ -1,0 +1,6 @@
+Package: SetupBox
+Version: 1.0.1
+Architecture: all
+Depends: git, inotify-tools, expect, spawn-fcgi, python-httplib2, python3-httplib2
+Maintainer: Developers <ajm100@ajou.ac.kr>
+Description: SetupBox
