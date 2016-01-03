@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#define AUTHSERVER "127.0.0.1:5000/foo"
+#define AUTHSERVER "127.0.0.1:5000/authTest"
 #define GOODMESSAGE "LOGIN GOOD"
 void dohelp()
 {
@@ -48,20 +48,13 @@ int main(int argc, char **argv)
 
 	if(!strcmp(argv[1], "--init"))
 	{
-		system("git init");
-		system("git config receive.denyCurrentBranch ignore");
-		system("git add . --all");
-		system("git commit -m \"initialize git\"");
-		system("mkdir ~/.SetupBox");
-		system("pwd > ~/.SetupBox/pathinfo");
-
 		printf("Enter your email : \n");
 		scanf("%s", email);
 		printf("Enter your password : \n");
 		system("stty -echo");
 		scanf("%s", password);
 		system("stty echo");
-/*
+
 		isgood = authentication(email, password);
 		if(isgood == 1)
 		{
@@ -72,7 +65,15 @@ int main(int argc, char **argv)
 			printf("register ID first in webpage!\n");
 			exit(1);
 		}
-*/		
+
+
+		system("git init");
+		system("git config receive.denyCurrentBranch ignore");
+		system("git add . --all");
+		system("git commit -m \"initialize git\"");
+		system("mkdir ~/.SetupBox");
+		system("pwd > ~/.SetupBox/pathinfo");
+
 	}
 
 	if(!strcmp(argv[1], "--clone"))
@@ -83,7 +84,7 @@ int main(int argc, char **argv)
 		system("stty -echo");
 		scanf("%s", password);
 		system("stty echo");
-/*
+
 		isgood = authentication(email, password);
 		if(isgood == 1)
 		{
@@ -94,7 +95,7 @@ int main(int argc, char **argv)
 			printf("register ID first in webpage!\n");
 			exit(1);
 		}
-*/		
+	
 		pathinfo = popen("cat ~/.SetupBox/pathinfo", "r");
 		fgets(path,1024, pathinfo);
 		
@@ -117,7 +118,6 @@ int main(int argc, char **argv)
 		system("stty -echo");
 		scanf("%s", password);
 		system("stty echo");
-/*
 		isgood = authentication(email, password);
 		if(isgood == 1)
 		{
@@ -128,7 +128,7 @@ int main(int argc, char **argv)
 			printf("register ID first in webpage!\n");
 			exit(1);
 		}
-*/	
+
 		sprintf(client, "nohup SetupBox_client &> ~/.SetupBox/log.txt &");
 		system(client);
 	}
