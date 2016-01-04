@@ -4,13 +4,10 @@ Authentication is Commented out
 
 debian package : SetupBox.deb
 To install, type 'sudo dpkg -i Setupbox.deb'
+If you aren't on Debian Linux, copy src/SetupBox and src/SetupBox_client to /usr/local/bin.
 
-md5sum SetupBox.deb : ea301bdf9a410d16ce837dcdf43c48f3
+md5sum SetupBox.deb : 311a38c85be2970517aa766649fcba5c 
 
-In your server-side directory, SetupBox --init
-In a directory what you want clone, SetupBox --clone
-In a cloned directory, SetupBox --start.
 SetupBox_client run as daemon.
 To turn off, use kill command.
 
-Log and server-side directory path are in ~/.SetupBox.

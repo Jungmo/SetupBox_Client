@@ -22,7 +22,6 @@
 #		exit 1
 #fi
 
-change=first
 while : ; do
 
 #	if [[ -n $change ]]
@@ -35,7 +34,7 @@ while : ; do
 				
 #			change=
 			sleep 10
-			echo "Complete a cycle. Sleep 20 seconds";
+			echo "Complete a cycle. Sleep 10 seconds";
 #	fi	
 
 #	change=$(inotifywait -r -t 20 --format '%:e %f' -e 'create' -e 'delete' -e 'modify' ${DIR})
