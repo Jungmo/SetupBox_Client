@@ -7,6 +7,7 @@ If you aren't on Debian Linux, copy src/SetupBox and src/SetupBox_client to /usr
 package httpie is needed.(sudo apt-get install httpie)
 
 To install and run SetupBox, just type SetupBox --install on a directory where you want to clone.
+
 After authentication, SetupBox_client run as daemon on directory 'SetupBox'.
 If you turn off SetupBox client, use kill command.
 
